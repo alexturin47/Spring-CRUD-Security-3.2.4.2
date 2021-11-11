@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>All people</title>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="list">
+        <h3>Список пользователей</h3>
+        <div class="row" th:each="user : ${users}">
+            <div class="num" th:text="${user.getId()}"></div>
+            <div class="name" th:text="${user.getName()}"></div>
+            <div class="lastname" th:text="${user.getLastname()}"></div>
+            <div class="age" th:text="${user.getAge()}"></div>
+            <div class="list-buttons">
+                <a class="button" th:href="@{/edit/{id}(id=${user.getId()})}">Редактировать</a>
+                <form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" th:method="DELETE">
+                    <button class="button" type="submit">удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <h3>Создание нового пользователя</h3>
+    <form class="create-form" th:action="@{/}" th:method="POST" th:object="${user}">
+        <label for="name">Имя</label>
+        <input type="text" th:field="*{name}" id="name"/>
+        <label for="lastame">Фамилия</label>
+        <input type="text" th:field="*{lastname}" id="lastame"/>
+        <label for="age">Возраст</label>
+        <input type="text" id="age" th:field="*{age}"/>
+        <input type="submit" value="Создать пользователя"/>
+    </form>
+</div>
+</body>
+<style>
+    h3 {
+        text-align: center;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    .list {
+        width: auto;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+
+    .row {
+        display: flex;
+        width: fit-content;
+        border: gray 1px solid;
+        background-color: lightcyan;
+    }
+
+    .row div {
+        padding: 10px 5px;
+    }
+
+    .num {
+        width: 25px;
+        background-color: cyan;
+        border-right: 1px solid gray;
+    }
+
+    .name {
+        width: 150px;
+    }
+
+    .lastname {
+        width: 150px;
+    }
+
+    .age {
+        width: 25px;
+    }
+
+    .list-buttons {
+        display: flex;
+        padding: 3px 8px;
+    }
+    .list-buttons form button{
+        height: 100%;
+        background-color: red;
+        color: white;
+    }
+    .button {
+        display: block;
+        padding: 5px 8px;
+        margin-left: 8px;
+        border: gray 1px solid;
+        border-radius: 2px;
+        text-align: center;
+        background-color: lightgreen;
+        color: black;
+        text-decoration: none;
+    }
+    .create-form {
+        padding: 8px;
+        background: #80cb79;
+        border: gray 2px solid;
+    }
+
+    .create-form label {
+        margin-left: 14px;
+    }
+</style>
+</html>
