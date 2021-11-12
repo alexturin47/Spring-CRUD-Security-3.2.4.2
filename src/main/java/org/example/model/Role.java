@@ -13,12 +13,10 @@ public class Role {
     @Column(name="role")
     private String role;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name="user_id")
+//    private User user;
 
-
-    public Role(){}
 
     public int getId() {
         return id;
@@ -34,13 +32,5 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
