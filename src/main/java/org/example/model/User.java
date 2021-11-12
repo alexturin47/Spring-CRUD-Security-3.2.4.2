@@ -4,9 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name="users")
@@ -26,7 +26,7 @@ public class User{
     @JoinTable(name="users_roles",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User(){}
 
@@ -62,12 +62,17 @@ public class User{
         this.email = email;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRoles(String roles) {
+        this.roles = new HashSet<>();
+    }
+
+    public String getRolesAsString() {
+        Set<Role> roleList = getRoles();
+        return getRoles().stream().map(Role::getRole).collect(Collectors.joining(" "));
     }
 }
 

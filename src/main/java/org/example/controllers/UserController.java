@@ -1,7 +1,7 @@
 package org.example.controllers;
 
+import org.example.model.Role;
 import org.example.model.User;
-//import org.example.service.UserSecurityService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -31,11 +32,11 @@ public class UserController {
         return "/index";
     }
 
-//    @GetMapping("/admin")
-//    public String adminPage(Model model, @ModelAttribute("user") User user) {
-//        model.addAttribute("users", userService.index());
-//        return "/admin";
-//    }
+    @GetMapping("/admin")
+    public String adminPage(Model model, @ModelAttribute("user") User user, @ModelAttribute("roles") Role role) {
+        model.addAttribute("users", userService.index());
+        return "/admin";
+    }
 
 //    @GetMapping("/authentificated")
 //    public String pageForAuthentificatedUser(Model model, @ModelAttribute("user") User user) {
@@ -49,11 +50,6 @@ public class UserController {
         return "secured part of web service: " + user.getUsername() + " " + user.getEmail();
     }
 
-    @GetMapping("/admin")
-    public String pageForAdmin() {
-        return "/admin";
-    }
-
     @GetMapping("/profile")
     public String pageForReadProfile() {
         return "/profile";
@@ -64,17 +60,17 @@ public class UserController {
         return "admins page";
     }
 
-//    @PostMapping()
-//    public String create(@ModelAttribute("user") User user) {
-//        userService.save(user);
-//        return "redirect:/";
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public String delete(@PathVariable("id") int id) {
-//        userService.delete(id);
-//        return "redirect:/";
-//    }
+    @PostMapping()
+    public String create(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        userService.delete(id);
+        return "redirect:/admin";
+    }
 
 //    @GetMapping("/edit/{id}")
 //    public String edit(Model model, @PathVariable("id") int id) {

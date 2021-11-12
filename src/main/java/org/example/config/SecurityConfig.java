@@ -1,6 +1,5 @@
 package org.example.config;
 
-//import org.example.service.UserSecurityService;
 import org.example.config.handler.LoginSuccessHandler;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.loginSuccessHandler = loginSuccessHandler;
     }
 
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("user").password("1").roles("USER");
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

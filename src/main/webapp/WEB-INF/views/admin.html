@@ -11,9 +11,10 @@
         <h3>Список пользователей</h3>
         <div class="row" th:each="user : ${users}">
             <div class="num" th:text="${user.getId()}"></div>
-            <div class="name" th:text="${user.getName()}"></div>
-            <div class="lastname" th:text="${user.getLastname()}"></div>
-            <div class="age" th:text="${user.getAge()}"></div>
+            <div class="username" th:text="${user.getUsername()}"></div>
+            <div class="password" th:text="${user.getPassword()}"></div>
+            <div class="email" th:text="${user.getEmail()}"></div>
+            <div class="role" th:text="${user.getRolesAsString()}"></div>
             <div class="list-buttons">
                 <a class="button" th:href="@{/edit/{id}(id=${user.getId()})}">Редактировать</a>
                 <form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" th:method="DELETE">
@@ -25,12 +26,28 @@
 
     <h3>Создание нового пользователя</h3>
     <form class="create-form" th:action="@{/}" th:method="POST" th:object="${user}">
-        <label for="name">Имя</label>
-        <input type="text" th:field="*{name}" id="name"/>
-        <label for="lastame">Фамилия</label>
-        <input type="text" th:field="*{lastname}" id="lastame"/>
-        <label for="age">Возраст</label>
-        <input type="text" id="age" th:field="*{age}"/>
+        <label for="username">Username</label>
+        <input type="text" th:field="*{username}" id="username"/>
+        <label for="password">Password</label>
+        <input type="text" th:field="*{password}" id="password"/>
+        <label for="email">Email</label>
+        <input type="text" id="email" th:field="*{email}"/>
+        <label for="userId">USER</label>
+<!--        <div th:each="role : ${rolelist}">-->
+<!--            <input type="checkbox" name="sel_roles" th:field="*{sel_roles}" th:value="${role}"-->
+<!--                   th:text="${role}" />-->
+<!--        </div>-->
+        <div th:each="role:${roles}">
+            <input name="authorities" th:checked="${user.hasAuthorities('__${role.authority}__')}"
+                   th:id="${role.authority}"
+                   th:value="${role.authority}" type="checkbox">
+            <label th:for="${role.authority}" th:text="${role.authority}"/>
+        </div>
+
+
+        <input type="checkbox" id="userId" name="roles" value="ROLE_USER">
+        <label for="adminId">ADMIN</label>
+        <input type="checkbox" id="adminId" name="roles" value="ROLE_ADMIN">
         <input type="submit" value="Создать пользователя"/>
     </form>
 </div>
@@ -70,16 +87,20 @@
         border-right: 1px solid gray;
     }
 
-    .name {
+    .username {
         width: 150px;
     }
 
-    .lastname {
+    .password {
         width: 150px;
     }
 
-    .age {
-        width: 25px;
+    .email {
+        width: 150px;
+    }
+
+    .role {
+        width: 150px;
     }
 
     .list-buttons {
