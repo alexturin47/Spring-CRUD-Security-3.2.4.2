@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <title>All people</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <h3 class="text-center">Добавление пользователя</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form th:action="@{/}" th:method="POST" th:object="${user}">
+                <div class="form-group">
+                    <label for="username">Пользователь</label>
+                    <input class="form-control" type="text" th:field="*{username}" id="username"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input class="form-control" type="text" th:field="*{password}" id="password"/>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="text" id="email" th:field="*{email}"/>
+                </div>
+                <div class="form-group">
+                    <label>Select ROLE:</label>
+                    <div th:each="role:${roles}">
+                        <input name="roles"
+                                th:id="${role.getRole()}"
+                                th:value="${role.getRole()}" type="checkbox">
+                        <label th:for="${role.getRole()}" th:text="${role.getRole()}"></label>
+                    </div>
+                </div>
+
+                <input  class="form-control" type="submit" value="Сохранить изменения"/>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

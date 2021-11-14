@@ -10,7 +10,7 @@ public interface UserDao  {
     User findByUsername(String username);
     List<User> index();
     void save(User user);
-    User read(int id);
-    void update(int id, User user);
-    void delete(int id);
+    User read(Long  id);
+    void update(Long id, User user);
+    void delete(Long id);
 }

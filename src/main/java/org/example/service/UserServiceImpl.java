@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
@@ -43,17 +44,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User read(int id) {
+    public User read(Long id) {
         return userDao.read(id);
     }
 
     @Override
-    public void update(int id, User user) {
+    public void update(Long  id, User user) {
         userDao.update(id, user);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long  id) {
         userDao.delete(id);
     }
 
@@ -67,7 +68,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         org.springframework.security.core.userdetails.User us = new org.springframework.security.core.userdetails.User(user.getUsername() , user.getPassword()
                 , mapRolesToAuthorities(user.getRoles()));
-        System.out.println(us.getUsername() + " "+us.getPassword() + " "+us.getAuthorities().toString());
         return us;
     }
 

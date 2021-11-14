@@ -43,17 +43,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User read(int id) {
+    public User read(Long  id) {
         return entityManager.find(User.class, id);
     }
 
     @Override
-    public void update(int id, User user) {
+    public void update(Long  id, User user) {
         entityManager.merge(user);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long  id) {
         entityManager.remove(entityManager.find(User.class,id));
     }
 

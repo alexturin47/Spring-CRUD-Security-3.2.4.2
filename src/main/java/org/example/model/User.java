@@ -30,6 +30,13 @@ public class User{
 
     public User(){}
 
+    public User(String username, String password, String email, Set<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+    }
+
     public Long getId() {
         return id;
     }
@@ -66,13 +73,17 @@ public class User{
         return roles;
     }
 
-    public void setRoles(String roles) {
-        this.roles = new HashSet<>();
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getRolesAsString() {
-        Set<Role> roleList = getRoles();
         return getRoles().stream().map(Role::getRole).collect(Collectors.joining(" "));
+    }
+
+    public Boolean hasAuthorities(String role){
+        Set<Role> roles = getRoles();
+        return roles.stream().anyMatch(a -> a.getRole().equals(role));
     }
 }
 

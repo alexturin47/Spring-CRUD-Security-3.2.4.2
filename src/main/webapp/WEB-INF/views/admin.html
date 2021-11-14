@@ -1,136 +1,52 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <title>All people</title>
 </head>
 <body>
 
-<div class="wrapper">
-    <div class="list">
-        <h3>Список пользователей</h3>
-        <div class="row" th:each="user : ${users}">
-            <div class="num" th:text="${user.getId()}"></div>
-            <div class="username" th:text="${user.getUsername()}"></div>
-            <div class="password" th:text="${user.getPassword()}"></div>
-            <div class="email" th:text="${user.getEmail()}"></div>
-            <div class="role" th:text="${user.getRolesAsString()}"></div>
-            <div class="list-buttons">
-                <a class="button" th:href="@{/edit/{id}(id=${user.getId()})}">Редактировать</a>
-                <form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" th:method="DELETE">
-                    <button class="button" type="submit">удалить</button>
-                </form>
+<h3 class="title mb-1 text-center">Список пользователей</h3>
+<div class="container">
+
+        <div class="row align-content-center bg-light border border-info mb-1" th:each="user : ${users}">
+            <div class="col-1 align-self-center" th:text="${user.getId()}"></div>
+            <div class="col-2 align-self-center" th:text="${user.getUsername()}"></div>
+            <div class="col-2 align-self-center" th:text="${user.getPassword()}"></div>
+            <div class="col-2 align-self-center" th:text="${user.getEmail()}"></div>
+            <div class="col-2 align-self-center bg-info" th:text="${user.getRolesAsString()}">
+                <div th:each="role :${user.getRoles()}" th:text="${role.getRole()}"></div>
             </div>
+
+            <form class="col-3 list-buttons d-flex align-self-center align-items-center justify-content-around" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}"
+                  th:method="DELETE">
+                <a class="btn btn-primary" role="button" th:href="@{/admin/user/{id}(id=${user.getId()})}">Смотреть</a>
+                <a class="btn btn-primary" role="button" th:href="@{/edit/{id}(id=${user.getId()})}">Изменить</a>
+                <input class="btn btn-danger" type="submit" value="Удалить"/>
+            </form>
         </div>
+
+
+    <div class="row justify-content-around mt-4">
+        <div class="col-3 d-flex justify-content-end">
+            <a class="btn btn-primary align-self-center" href="/new">Добавить пользователя</a>
+        </div>
+        <div class="col-3 d-flex justify-content-start">
+            <a class="btn btn-primary align-self-center" href="/logout">Выйти</a>
+        </div>
+
     </div>
 
-    <h3>Создание нового пользователя</h3>
-    <form class="create-form" th:action="@{/}" th:method="POST" th:object="${user}">
-        <label for="username">Username</label>
-        <input type="text" th:field="*{username}" id="username"/>
-        <label for="password">Password</label>
-        <input type="text" th:field="*{password}" id="password"/>
-        <label for="email">Email</label>
-        <input type="text" id="email" th:field="*{email}"/>
-        <label for="userId">USER</label>
-<!--        <div th:each="role : ${rolelist}">-->
-<!--            <input type="checkbox" name="sel_roles" th:field="*{sel_roles}" th:value="${role}"-->
-<!--                   th:text="${role}" />-->
-<!--        </div>-->
-        <div th:each="role:${roles}">
-            <input name="authorities" th:checked="${user.hasAuthorities('__${role.authority}__')}"
-                   th:id="${role.authority}"
-                   th:value="${role.authority}" type="checkbox">
-            <label th:for="${role.authority}" th:text="${role.authority}"/>
-        </div>
-
-
-        <input type="checkbox" id="userId" name="roles" value="ROLE_USER">
-        <label for="adminId">ADMIN</label>
-        <input type="checkbox" id="adminId" name="roles" value="ROLE_ADMIN">
-        <input type="submit" value="Создать пользователя"/>
-    </form>
 </div>
 </body>
 <style>
-    h3 {
-        text-align: center;
+    .row{
+        min-height: 50px;
     }
 
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 auto;
-    }
 
-    .list {
-        width: auto;
-        margin-bottom: 20px;
-        margin-top: 10px;
-    }
-
-    .row {
-        display: flex;
-        width: fit-content;
-        border: gray 1px solid;
-        background-color: lightcyan;
-    }
-
-    .row div {
-        padding: 10px 5px;
-    }
-
-    .num {
-        width: 25px;
-        background-color: cyan;
-        border-right: 1px solid gray;
-    }
-
-    .username {
-        width: 150px;
-    }
-
-    .password {
-        width: 150px;
-    }
-
-    .email {
-        width: 150px;
-    }
-
-    .role {
-        width: 150px;
-    }
-
-    .list-buttons {
-        display: flex;
-        padding: 3px 8px;
-    }
-    .list-buttons form button{
-        height: 100%;
-        background-color: red;
-        color: white;
-    }
-    .button {
-        display: block;
-        padding: 5px 8px;
-        margin-left: 8px;
-        border: gray 1px solid;
-        border-radius: 2px;
-        text-align: center;
-        background-color: lightgreen;
-        color: black;
-        text-decoration: none;
-    }
-    .create-form {
-        padding: 8px;
-        background: #80cb79;
-        border: gray 2px solid;
-    }
-
-    .create-form label {
-        margin-left: 14px;
-    }
 </style>
 </html>

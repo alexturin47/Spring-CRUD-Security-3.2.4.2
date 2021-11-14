@@ -1,11 +1,14 @@
 package org.example.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="role")
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,13 +17,11 @@ public class Role {
     @Column(name="role")
     private String role;
 
-//    @ManyToMany(mappedBy = "role")
-//    private List<User> users;
-//    @ManyToOne
-//    @JoinColumn(name="user_id")
-//    private User user;
+    public Role(){}
 
-
+    public Role(String name){
+        this.role = name;
+    }
     public int getId() {
         return id;
     }
@@ -37,11 +38,8 @@ public class Role {
         this.role = role;
     }
 
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
+    @Override
+    public String getAuthority() {
+        return this.role;
+    }
 }

@@ -22,7 +22,7 @@ public class LoginSuccessHandler implements org.springframework.security.web.aut
         if (roles.contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/admin");
         } else if(roles.contains("ROLE_USER")) {
-            httpServletResponse.sendRedirect("/profile");
+            httpServletResponse.sendRedirect("/user");
         }
     }
 
