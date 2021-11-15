@@ -37,7 +37,12 @@ public class InitDB {
         roles.add(roleServce.findByRolename("ROLE_USER"));
 
         if(userService.findByUsername("admin") == null) {
-            User admin = new User("admin", "$2y$10$YLOfQ4E8fl9DxDmErmeeWe7YFliE3vU1nBYc3H6RalBA0q.6g9IKS", "admin@mail.ru", roles);
+ //           User admin = new User();
+//            admin.setUsername("admin");
+//            admin.setPassword("$2y$10$YLOfQ4E8fl9DxDmErmeeWe7YFliE3vU1nBYc3H6RalBA0q.6g9IKS");
+//            admin.setEmail("admin@mail.com");
+//            admin.setRoles(roles);
+            User admin = new User("admin", "$2y$10$VlmF6KfNUunuND/r.8jPfe6P8BrUFLybiT.JE6Vm/.j2kYHbAE5zq", "admin@mail.ru", roles);
             userService.save(admin);
         }
 

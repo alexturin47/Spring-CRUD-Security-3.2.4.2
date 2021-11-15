@@ -24,7 +24,7 @@
                   th:method="DELETE">
                 <a class="btn btn-primary mr-1" role="button" th:href="@{/admin/user/{id}(id=${user.getId()})}">Смотреть</a>
                 <a class="btn btn-primary mr-1" role="button" th:href="@{/admin/edit/{id}(id=${user.getId()})}">Изменить</a>
-                <input class="btn btn-danger" type="submit" value="Удалить"/>
+                <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.getId()})}">Удалить</a>
             </form>
         </div>
 

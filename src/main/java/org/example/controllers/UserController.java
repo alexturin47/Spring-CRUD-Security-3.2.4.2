@@ -96,6 +96,13 @@ public class UserController {
         return "/user";
     }
 
+    @GetMapping("/admin/delete/{id}")
+    public String confirmDelete(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.read(id));
+        model.addAttribute("roles", roleServce.index());
+        return "/delete";
+    }
+
     @GetMapping("/admin/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.read(id));

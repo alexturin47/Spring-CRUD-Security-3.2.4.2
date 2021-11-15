@@ -2,6 +2,9 @@ package org.example.dao;
 
 
 import org.example.model.User;
+import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
@@ -19,9 +22,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUsername(String username) {
-        User user = entityManager.createQuery("select a from User a where a.username = ?1", User.class)
-                .setParameter(1, username).getSingleResult();
-        System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+        User user;
+        try {
+            user = entityManager.createQuery("select a from User a where a.username = ?1", User.class)
+                    .setParameter(1, username).getSingleResult();
+            System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+            user = null;
+        }
+
         return user;
     }
 
@@ -32,7 +42,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        entityManager.persist(user);
+        try {
+            entityManager.persist(user);
+        } catch (Exception e) {
+            System.out.println("Ошибка добавления пользователя!");
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -42,7 +58,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(Long  id, User user) {
-        entityManager.merge(user);
+        try {
+            entityManager.merge(user);
+        } catch (HibernateException e) {
+            System.out.println("Ошибка применения изменений! ");
+            e.printStackTrace();
+        }
+
     }
 
     @Override
