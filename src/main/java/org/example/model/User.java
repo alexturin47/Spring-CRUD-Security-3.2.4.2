@@ -2,6 +2,7 @@ package org.example.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
@@ -58,7 +59,8 @@ public class User{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
     }
 
     public String getEmail() {
@@ -85,6 +87,7 @@ public class User{
         Set<Role> roles = getRoles();
         return roles.stream().anyMatch(a -> a.getRole().equals(role));
     }
+
 }
 
 

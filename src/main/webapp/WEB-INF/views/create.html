@@ -2,20 +2,20 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <title>All people</title>
+    <link th:href="@{~/resources/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <title>Add user</title>
 </head>
 <body>
 
-<div class="container">
+<div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-4">
             <h3 class="text-center">Добавление пользователя</h3>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2">
         <div class="col-4">
-            <form th:action="@{/}" th:method="POST" th:object="${user}">
+            <form th:action="@{/admin/}" th:method="POST" th:object="${user}">
                 <div class="form-group">
                     <label for="username">Пользователь</label>
                     <input class="form-control" type="text" th:field="*{username}" id="username"/>
@@ -38,11 +38,16 @@
                     </div>
                 </div>
 
-                <input  class="form-control" type="submit" value="Сохранить изменения"/>
+                <input  class="form-control btn btn-outline-primary" type="submit" value="Сохранить изменения"/>
             </form>
         </div>
     </div>
-
+    <div class="row justify-content-center mt-4">
+        <div class="col-4 d-flex justify-content-between" >
+            <a href="/admin" type="button" class="btn btn-primary">Вернутся</a>
+            <a href="/logout" type="button" class="btn btn-primary">Выйти</a>
+        </div>
+    </div>
 </div>
 
 

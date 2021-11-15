@@ -12,9 +12,11 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
@@ -44,14 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(filter, CsrfFilter.class);
 
         http.authorizeRequests()
+                .antMatchers("/").anonymous()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .antMatchers("/profile/**").hasAnyRole("USER, ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER, ADMIN")
                 .antMatchers("/resources/**").authenticated()
                 .and()
                 .formLogin()
-                .successHandler(loginSuccessHandler)
-                .and()
-                .logout().logoutSuccessUrl("/");
+                .successHandler(loginSuccessHandler);
+//                .and()
+//                .logout().logoutSuccessUrl("/");
 
 
 
@@ -76,29 +79,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/profile").access("hasAnyRole('USER')").anyRequest().authenticated();
     }
     @Override
+
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
                 .antMatchers("/resources/**");
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
+//        return NoOpPasswordEncoder.getInstance();
 //    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService((UserDetailsService) userService);
+        daoAuthenticationProvider.setUserDetailsService(userService);
         return daoAuthenticationProvider;
     }
-
-
 }

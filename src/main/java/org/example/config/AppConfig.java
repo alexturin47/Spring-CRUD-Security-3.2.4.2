@@ -45,11 +45,13 @@ public class AppConfig implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
+        templateResolver.setCacheable(false);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -66,6 +68,7 @@ public class AppConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
@@ -74,6 +77,7 @@ public class AppConfig implements WebMvcConfigurer {
 
         registry.viewResolver(resolver);
     }
+
 
     @Bean
     public DataSource getDataSource(){
@@ -95,31 +99,6 @@ public class AppConfig implements WebMvcConfigurer {
         em.setJpaProperties(getHibernatePropeprties());
         return em;
     }
-
-
-
-    //Бин для создания SessionFactory
-//    @Bean
-//    public LocalSessionFactoryBean getSessionFactory() {
-//        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-//        factoryBean.setDataSource(getDataSource());
-//
-//        Properties props=new Properties();
-//        props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-//        props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-//
-//        factoryBean.setHibernateProperties(props);
-//        factoryBean.setAnnotatedClasses(User.class);
-//        return factoryBean;
-//    }
-
-    //TransactionManager при использовании SessionFActory
-//    @Bean
-//    public HibernateTransactionManager getTransactionManager() {
-//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-//        transactionManager.setSessionFactory(getSessionFactory().getObject());
-//        return transactionManager;
-//    }
 
     //TransactionManager при использовании EntittyManagerFactory
     @Bean

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
@@ -66,8 +65,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
 
-        org.springframework.security.core.userdetails.User us = new org.springframework.security.core.userdetails.User(user.getUsername() , user.getPassword()
-                , mapRolesToAuthorities(user.getRoles()));
+        org.springframework.security.core.userdetails.User us = new org.springframework.security.core.userdetails.User(
+                                        user.getUsername() , user.getPassword()
+                                        , mapRolesToAuthorities(user.getRoles()));
         return us;
     }
 

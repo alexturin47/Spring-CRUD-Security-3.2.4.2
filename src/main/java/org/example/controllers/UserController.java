@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -62,7 +61,7 @@ public class UserController {
         return "user";
     }
 
-    @PostMapping()
+    @PostMapping("/admin/")
     public String create(@ModelAttribute("user") User user, @RequestParam("roles") String[] roles) {
         user.setRoles(getRoleSet(roles));
         userService.save(user);
@@ -83,7 +82,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/admin/new")
     public String newUser(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("roles", roleServce.index());
         return "/create";
@@ -93,11 +92,11 @@ public class UserController {
     public String showUser(Model model, Principal principal, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.read(id));
         model.addAttribute("roles", roleServce.index());
-        model.addAttribute(principal);
+        model.addAttribute("owner", userService.findByUsername(principal.getName()));
         return "/user";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/admin/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.read(id));
         model.addAttribute("roles", roleServce.index());

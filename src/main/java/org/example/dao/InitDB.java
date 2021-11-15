@@ -37,14 +37,14 @@ public class InitDB {
         roles.add(roleServce.findByRolename("ROLE_USER"));
 
         if(userService.findByUsername("admin") == null) {
-            User admin = new User("admin", "admin", "admin@mail.ru", roles);
+            User admin = new User("admin", "$2y$10$YLOfQ4E8fl9DxDmErmeeWe7YFliE3vU1nBYc3H6RalBA0q.6g9IKS", "admin@mail.ru", roles);
             userService.save(admin);
         }
 
         roles = new HashSet<>();
         roles.add(roleServce.findByRolename("ROLE_USER"));
         if( userService.findByUsername("user") == null) {
-            User normalUser = new User("user", "user", "user@mail.com", roles);
+            User normalUser = new User("user", "$2y$10$ycyZJfq1ZnpRPCU0SrsrReJdUf5pRcjy7dIB1YymMSFufCOW1t4b6", "user@mail.com", roles);
             userService.save(normalUser);
         }
 
