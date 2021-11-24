@@ -22,14 +22,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUsername(String username) {
-        User user;
+        User user =null;
         try {
             user = entityManager.createQuery("select a from User a where a.username = ?1", User.class)
                     .setParameter(1, username).getSingleResult();
             System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
         } catch (Exception e) {
             e.printStackTrace();
-            user = null;
         }
 
         return user;

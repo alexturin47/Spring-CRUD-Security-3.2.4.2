@@ -17,6 +17,10 @@
         <div class="col-4">
             <form th:action="@{/{id}(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
                 <div class="form-group">
+                    <label for="id">ID</label>
+                    <input class="form-control" type="text" th:field="*{id}" id="id" disabled/>
+                </div>
+                <div class="form-group">
                     <label for="username">Пользователь</label>
                     <input class="form-control" type="text" th:field="*{username}" id="username"/>
                 </div>
@@ -26,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input class="form-control" type="text" id="email" th:field="*{email}"/>
+                    <input class="form-control" type="email" id="email" th:field="*{email}"/>
                 </div>
                 <div class="form-group">
                     <label>Select ROLE:</label>

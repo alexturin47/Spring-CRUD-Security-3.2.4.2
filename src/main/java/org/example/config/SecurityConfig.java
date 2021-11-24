@@ -79,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/profile").access("hasAnyRole('USER')").anyRequest().authenticated();
     }
     @Override
-
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()

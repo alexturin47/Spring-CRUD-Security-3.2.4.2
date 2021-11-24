@@ -14,6 +14,10 @@
         <div class="col-4">
             <form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" id="delete-form" th:method="DELETE">
                 <div class="form-group">
+                    <label for="id">ID</label>
+                    <input class="form-control" type="text" th:field="*{id}" id="id" disabled/>
+                </div>
+                <div class="form-group">
                     <label for="username">Пользователь</label>
                     <input class="form-control" type="text" th:field="*{username}" id="username" disabled/>
                 </div>
@@ -23,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input class="form-control" type="text" id="email" th:field="*{email}" disabled/>
+                    <input class="form-control" type="email" id="email" th:field="*{email}" disabled/>
                 </div>
                 <div class="form-group">
                     <label>ROLES:</label>

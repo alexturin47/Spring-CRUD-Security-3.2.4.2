@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,8 +20,16 @@ public class RoleRepo implements RoleDao{
 
     @Override
     public Role findByRolename(String rolename) {
-        return entityManager.createQuery("select a from Role a where a.role = ?1", Role.class)
-                            .setParameter(1, rolename).getSingleResult();
+        Role role = null;
+
+        Query query = entityManager.createQuery("select a from Role a where a.role = ?1", Role.class)
+                .setParameter(1, rolename);
+        try {
+            role = (Role)query.getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return role;
     }
 
     @Override

@@ -97,7 +97,7 @@ public class User{
 CREATE table users(
     id bigint auto_increment primary key ,
     username varchar(50) not null ,
-    password varchar(50) not null ,
+    password varchar(60) not null ,
     email varchar(50) UNIQUE
 );
 

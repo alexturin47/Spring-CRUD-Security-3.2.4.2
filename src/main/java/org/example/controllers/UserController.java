@@ -51,7 +51,6 @@ public class UserController {
         } else {
             return "redirect:/user";
         }
-
     }
 
     @GetMapping("/user")

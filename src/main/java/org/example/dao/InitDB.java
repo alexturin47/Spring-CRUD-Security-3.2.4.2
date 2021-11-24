@@ -22,6 +22,7 @@ public class InitDB {
 
     @PostConstruct
     private void postConstruct() {
+
         Role role;
         if( roleServce.findByRolename("ROLE_ADMIN") == null) {
             role = new Role("ROLE_ADMIN");
