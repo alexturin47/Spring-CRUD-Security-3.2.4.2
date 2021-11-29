@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
                     .setParameter(1, username).getSingleResult();
             System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.printf("Пользователь с именем %s не найден/n", username );
         }
 
         return user;
